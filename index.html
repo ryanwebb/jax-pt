@@ -501,7 +501,7 @@ function upsertEntry(entry) {
 
 // ── Dates & schedule ──────────────────────
 const SURGERY_DATE  = new Date('2026-06-05T12:00:00');
-const PROGRAM_START = new Date('2026-06-26T12:00:00');
+const PROGRAM_START = new Date('2026-06-25T12:00:00');
 
 const SCHEDULE = {
   1: { AM:['1','10','26','12','2_3','5','6'],        PM:['1','12','22','24','13_14','17','7'],   EVE:['1','12','11','15'] },
@@ -627,7 +627,7 @@ async function init() {
   const progDays = Math.floor((d - PROGRAM_START) / 86400000) + 1;
   const surgDays = Math.round((d - SURGERY_DATE)  / 86400000) + 1;
   document.getElementById('daySubtitle').textContent = `Program Day ${progDays} · Post-op Day ${surgDays}`;
-  document.getElementById('weekDisplay').textContent  = `Day ${surgDays} post-surgery`;
+  document.getElementById('weekDisplay').textContent  = ``;
   const pct = Math.min(100, Math.round(surgDays/84*100));
   document.getElementById('recFill').style.width = pct+'%';
   document.getElementById('recLabel').textContent = `Post-Surgery Recovery — Day ${surgDays} of ~84`;
