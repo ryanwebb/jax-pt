@@ -522,7 +522,7 @@ const SCHEDULE = {
 
 function getSched(ds) {
   const d = new Date(ds+'T12:00:00');
-  const diff = Math.round((d - PROGRAM_START) / 86400000);
+  const diff = Math.floor((d - PROGRAM_START) / 86400000);
   if (diff < 0) return null;
   const day = diff + 1;
   if (SCHEDULE[day]) return SCHEDULE[day];
@@ -624,9 +624,9 @@ async function init() {
   const td = todayStr();
   const d  = new Date(td+'T12:00:00');
   document.getElementById('dateDisplay').textContent = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
-  const progDays = Math.round((d - PROGRAM_START) / 86400000) + 1;
+  const progDays = Math.floor((d - PROGRAM_START) / 86400000) + 1;
   const surgDays = Math.round((d - SURGERY_DATE)  / 86400000) + 1;
-  document.getElementById('daySubtitle').textContent = `Corgi rehab · Program Day ${progDays}`;
+  document.getElementById('daySubtitle').textContent = `Program Day ${progDays} · Post-op Day ${surgDays}`;
   document.getElementById('weekDisplay').textContent  = `Day ${surgDays} post-surgery`;
   const pct = Math.min(100, Math.round(surgDays/84*100));
   document.getElementById('recFill').style.width = pct+'%';
