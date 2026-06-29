@@ -168,5 +168,50 @@
         "skipped": true
       }
     ]
+  },
+  {
+    "date": "2026-06-29",
+    "session": "PM",
+    "who": "pam",
+    "status": "partial",
+    "time": "4:45 PM",
+    "note": "Did much better but doesn’t like carpal PROM. Did great with adduction and abduction.",
+    "exercises": [
+      {
+        "id": "1",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "12",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "22",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "24",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "13_14",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "17",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "8",
+        "done": false,
+        "skipped": true
+      }
+    ]
   }
 ]
