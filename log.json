@@ -118,5 +118,55 @@
         "skipped": false
       }
     ]
+  },
+  {
+    "date": "2026-06-29",
+    "session": "AM",
+    "who": "pam",
+    "status": "partial",
+    "time": "8:42 AM",
+    "note": "",
+    "exercises": [
+      {
+        "id": "1",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "10",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "26",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "12",
+        "done": false,
+        "skipped": false
+      },
+      {
+        "id": "2_3",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "5",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "6",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "4",
+        "done": false,
+        "skipped": true
+      }
+    ]
   }
 ]
