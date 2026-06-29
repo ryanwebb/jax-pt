@@ -88,5 +88,35 @@
         "skipped": false
       }
     ]
+  },
+  {
+    "date": "2026-06-28",
+    "session": "EVE",
+    "who": "pam",
+    "status": "complete",
+    "time": "9:13 PM",
+    "note": "",
+    "exercises": [
+      {
+        "id": "1",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "12",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "20",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "15",
+        "done": true,
+        "skipped": false
+      }
+    ]
   }
 ]
