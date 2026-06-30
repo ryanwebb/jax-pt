@@ -213,5 +213,35 @@
         "skipped": true
       }
     ]
+  },
+  {
+    "date": "2026-06-29",
+    "session": "EVE",
+    "who": "ryan",
+    "status": "complete",
+    "time": "9:06 PM",
+    "note": "",
+    "exercises": [
+      {
+        "id": "1",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "12",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "11",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "15",
+        "done": true,
+        "skipped": false
+      }
+    ]
   }
 ]
