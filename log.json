@@ -273,5 +273,55 @@
     "time": "9:37 PM",
     "note": "",
     "exercises": []
+  },
+  {
+    "date": "2026-07-01",
+    "session": "AM",
+    "who": "pam",
+    "status": "partial",
+    "time": "10:20 AM",
+    "note": "",
+    "exercises": [
+      {
+        "id": "1",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "10",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "26",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "12",
+        "done": false,
+        "skipped": true
+      },
+      {
+        "id": "2_3",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "5",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "6",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "4",
+        "done": true,
+        "skipped": false
+      }
+    ]
   }
 ]
