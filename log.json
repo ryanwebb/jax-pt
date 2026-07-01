@@ -323,5 +323,50 @@
         "skipped": false
       }
     ]
+  },
+  {
+    "date": "2026-07-01",
+    "session": "PM",
+    "who": "pam",
+    "status": "partial",
+    "time": "2:14 PM",
+    "note": "",
+    "exercises": [
+      {
+        "id": "1",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "12",
+        "done": false,
+        "skipped": true
+      },
+      {
+        "id": "22",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "24",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "13_14",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "17",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "7",
+        "done": true,
+        "skipped": false
+      }
+    ]
   }
 ]
