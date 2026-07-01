@@ -339,6 +339,32 @@
   </div>
 </div>
 
+
+<!-- Edit Log Entry Modal -->
+<div class="overlay" id="editModal" onclick="closeOverlay(event,'editModal')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Edit Session Log</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Who logged this session?</div>
+    <div class="who-row">
+      <button class="who-btn" id="editWhoRyan" onclick="selectEditWho('ryan')">Ryan</button>
+      <button class="who-btn" id="editWhoPam"  onclick="selectEditWho('pam')">Pam</button>
+      <button class="who-btn" id="editWhoKayla" onclick="selectEditWho('kayla')">Kayla</button>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">Session status</div>
+    <div class="who-row" style="margin-bottom:14px;">
+      <button class="who-btn" id="editStComplete" onclick="selectEditStatus('complete')">✓ Done</button>
+      <button class="who-btn" id="editStPartial"  onclick="selectEditStatus('partial')">~ Partial</button>
+      <button class="who-btn" id="editStSkipped"  onclick="selectEditStatus('skipped')">— Skipped</button>
+    </div>
+    <div id="editExercises" style="margin-bottom:14px;"></div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">Notes</div>
+    <textarea class="modal-note" id="editNote" placeholder="Notes about this session…"></textarea>
+    <button class="modal-submit" onclick="saveEdit()">✓ Save Changes</button>
+    <button class="modal-skip-all" onclick="closeOverlay({target:document.getElementById('editModal')},'editModal')">Cancel</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -906,6 +932,7 @@ function buildHistory() {
       <div style="display:flex;gap:5px;align-items:center">
         ${entry.who?`<span class="by-badge ${entry.who}">${cap(entry.who)}</span>`:''}
         <span class="pill ${entry.status}">${entry.status==='complete'?'Done':cap(entry.status)}</span>
+        <button class="ex-btn info-btn" style="font-size:11px" onclick="openEditModal('${entry.date}','${entry.session}')">✏️ Edit</button>
       </div>
     </div>
     <div class="log-entry-meta">${entry.time||''}${totN>0?` · ${doneN}/${totN} exercises`:''}${entry.skipReason?' · '+entry.skipReason:''}${entry.note?' · "'+entry.note+'"':''}</div>`;
@@ -927,6 +954,134 @@ function updateStats() {
   document.getElementById('hStatDone').textContent=memLog.filter(e=>e.status!=='missed').length;
   document.getElementById('hStatMissed').textContent=0;
   document.getElementById('hStatPct').textContent=ps;
+}
+
+
+// ── EDIT LOG ENTRY ────────────────────────
+let editTarget = null; // { date, session }
+let editStatus = 'complete';
+let editWho    = 'ryan';
+
+function openEditModal(date, session) {
+  const entry = memLog.find(e => e.date===date && e.session===session);
+  if (!entry) return;
+  editTarget = { date, session };
+  editStatus = entry.status || 'complete';
+  editWho    = entry.who    || 'ryan';
+
+  // Who
+  selectEditWho(editWho);
+  // Status
+  selectEditStatus(editStatus);
+  // Note
+  document.getElementById('editNote').value = entry.note || '';
+
+  // Exercises — rebuild checkboxes from stored entry
+  const sched   = getSched(date);
+  const exIds   = (sched && sched[session]) || [];
+  const exDiv   = document.getElementById('editExercises');
+
+  if (exIds.length === 0 || entry.status === 'skipped') {
+    exDiv.innerHTML = '';
+  } else {
+    exDiv.innerHTML = '<div style="font-size:12px;color:var(--muted);margin-bottom:8px;">Exercises</div>' +
+      exIds.map(id => {
+        const ex = getEx(id); if (!ex) return '';
+        const logged = (entry.exercises||[]).find(e=>e.id===id);
+        const done    = logged ? logged.done    : false;
+        const skipped = logged ? logged.skipped : false;
+        const state   = done ? 'done' : skipped ? 'skipped-ex' : '';
+        const ck      = done ? '✓' : skipped ? '—' : '';
+        return `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);">
+          <div class="ex-check ${state}" id="edit-chk-${id}" onclick="toggleEditEx('${id}')">${ck}</div>
+          <div style="flex:1">
+            <div style="font-family:'Nunito',sans-serif;font-size:13px;font-weight:700">${ex.name}</div>
+            <div style="font-size:11px;color:var(--muted)">${ex.detail}</div>
+          </div>
+          <button class="ex-btn skip-btn" onclick="skipEditEx('${id}')">Skip</button>
+        </div>`;
+      }).join('');
+  }
+
+  document.getElementById('editModal').classList.add('open');
+}
+
+function selectEditWho(who) {
+  editWho = who;
+  ['ryan','pam','kayla'].forEach(u => {
+    document.getElementById('editWho'+cap(u)).className = 'who-btn' + (who===u ? ` sel-${u}` : '');
+  });
+}
+
+function selectEditStatus(status) {
+  editStatus = status;
+  const map = { complete:'editStComplete', partial:'editStPartial', skipped:'editStSkipped' };
+  const cls = { complete:'sel-ryan', partial:'sel-pam', skipped:'sel-kayla' };
+  Object.keys(map).forEach(s => {
+    document.getElementById(map[s]).className = 'who-btn' + (status===s ? ` ${cls[s]}` : '');
+  });
+  // Hide/show exercises based on skipped
+  const exDiv = document.getElementById('editExercises');
+  if (exDiv) exDiv.style.display = status==='skipped' ? 'none' : '';
+}
+
+function toggleEditEx(exId) {
+  const c = document.getElementById(`edit-chk-${exId}`);
+  if (c.classList.contains('done')) {
+    c.classList.remove('done'); c.textContent = '';
+  } else {
+    c.classList.remove('skipped-ex'); c.classList.add('done'); c.textContent = '✓';
+  }
+}
+
+function skipEditEx(exId) {
+  const c = document.getElementById(`edit-chk-${exId}`);
+  c.classList.remove('done'); c.classList.add('skipped-ex'); c.textContent = '—';
+}
+
+async function saveEdit() {
+  if (!editTarget) return;
+  const { date, session } = editTarget;
+  const existing = memLog.find(e => e.date===date && e.session===session) || {};
+
+  // Read exercise states
+  const sched  = getSched(date);
+  const exIds  = (sched && sched[session]) || [];
+  let exercises = existing.exercises || [];
+
+  if (editStatus !== 'skipped' && exIds.length > 0) {
+    exercises = exIds.map(id => {
+      const c = document.getElementById(`edit-chk-${id}`);
+      const done    = c ? c.classList.contains('done')       : false;
+      const skipped = c ? c.classList.contains('skipped-ex') : false;
+      return { id, done, skipped };
+    });
+  }
+
+  // Auto-derive status from checkboxes if not manually overridden to skipped
+  let status = editStatus;
+  if (status !== 'skipped' && exIds.length > 0) {
+    const doneN = exercises.filter(e=>e.done).length;
+    const skipN = exercises.filter(e=>e.skipped).length;
+    if (doneN === exIds.length) status = 'complete';
+    else if (doneN > 0 || skipN > 0) status = 'partial';
+    else status = 'partial';
+  }
+
+  const updated = {
+    ...existing,
+    who: editWho,
+    status,
+    note: document.getElementById('editNote').value.trim(),
+    exercises,
+    editedAt: new Date().toISOString()
+  };
+
+  upsertEntry(updated);
+  document.getElementById('editModal').classList.remove('open');
+  await ghSave();
+  showToast('✓ Entry updated');
+  buildHistory(); buildToday(); buildWeek(); updateStats();
 }
 
 // ── UI helpers ────────────────────────────
