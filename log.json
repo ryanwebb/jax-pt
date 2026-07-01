@@ -253,5 +253,15 @@
     "time": "9:37 PM",
     "note": "",
     "exercises": []
+  },
+  {
+    "date": "2026-06-30",
+    "session": "PM",
+    "who": "ryan",
+    "status": "skipped",
+    "skipReason": "pt",
+    "time": "9:37 PM",
+    "note": "",
+    "exercises": []
   }
 ]
