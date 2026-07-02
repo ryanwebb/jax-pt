@@ -368,5 +368,30 @@
         "skipped": false
       }
     ]
+  },
+  {
+    "date": "2026-07-02",
+    "session": "EVE",
+    "who": "pam",
+    "status": "partial",
+    "time": "5:29 AM",
+    "note": "",
+    "exercises": [
+      {
+        "id": "1",
+        "done": true,
+        "skipped": false
+      },
+      {
+        "id": "12",
+        "done": false,
+        "skipped": true
+      },
+      {
+        "id": "20",
+        "done": null,
+        "skipped": null
+      }
+    ]
   }
 ]
